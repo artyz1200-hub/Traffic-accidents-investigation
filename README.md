@@ -39,9 +39,9 @@ Place this at the end of the insights section as a clean conclusion visual showi
 
 ## Team & Contributors
 
-- [Artur Zavistovskii](https://github.com/your-artur-github)
-- [Bhuvanesh Dinesh Wadhwani](https://github.com/your-bhuvanesh-github)
-- [Anastasiia Khitrova](https://github.com/your-anastasiia-github)
+- [Artur Zavistovskii](https://github.com/artyz1200-hub)
+- [Bhuvanesh Dinesh Wadhwani](https://github.com/BhuvaneshWadhwani)
+- [Anastasiia Khitrova](https://github.com/hitrova27-svg)
 
 ## How to Run
 
