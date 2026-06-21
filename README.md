@@ -58,7 +58,7 @@ Evaluating environmental variables reveals that lighting conditions amplify cras
 
 ## 👥 Team & Contributors
 
-We are a collaborative team of data enthusiasts focused on delivering impactful data stories:
+
 
 * **Artur Zavistovskii** — [GitHub Profile](https://github.com/artyz1200-hub)
 * **Bhuvanesh Dinesh Wadhwani** — [GitHub Profile](https://github.com/BhuvaneshWadhwani)
