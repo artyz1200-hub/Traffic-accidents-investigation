@@ -20,11 +20,12 @@ A comprehensive, data-driven exploratory data analysis (EDA) of road traffic inc
 
 ## 📌 Project Overview
 
-This project investigates an authentic road accident dataset from Edinburgh to uncover critical patterns that explain traffic risk and crash severity across the urban landscape. 
+This project explores a real-world road accident dataset from Edinburgh to identify the key factors that influence traffic risk and crash severity across the city.
 
-Utilizing a comprehensive database containing detailed incident records and 31 variables, our team performed an end-to-end analytical workflow combining data cleansing, rigorous statistical profiling, and advanced spatial-temporal visual storytelling. 
+Using a rich dataset containing 31 variables and detailed accident records, we carried out a complete analytical workflow that included data cleaning, exploratory statistical analysis, and spatial-temporal visualization. The study combines traditional data analysis with visual storytelling to reveal meaningful patterns hidden within the data.
 
-The primary goal of this study is to move beyond raw statistics to extract actionable insights on how infrastructure design, speed limits, atmospheric conditions, and lighting interact to compound road risk. The final report is compiled as a fully reproducible, self-contained Quarto document.
+Rather than simply reporting accident counts, our objective is to generate actionable insights into how road infrastructure, speed limits, weather conditions, and lighting environments interact to shape accident risk. The entire analysis and final report are presented as a fully reproducible, self-contained Quarto document, ensuring transparency and ease of replication.
+
 
 ---
 
