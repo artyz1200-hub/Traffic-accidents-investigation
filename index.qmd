@@ -1,0 +1,271 @@
+---
+title: "Investigating Road Traffic Accidents"
+author:
+  - Artur Zavistovskyi
+  - Bhuvanesh Dinesh Wadhwani
+  - Anastasiia Khitrova
+format: 
+  html:
+    toc: true
+    toc-depth: 2
+    theme: focal
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
+
+# Executive Summary & Project Overview
+
+Road traffic accidents represent one of the most critical public safety challenges globally. Behind every data point lies a complex interplay of human behavior, environmental conditions, and infrastructure design. 
+
+In this collaborative project, our team performed an end-to-end **Exploratory Data Analysis (EDA)** on a comprehensive traffic accident dataset. Rather than just compiling basic statistics, we aimed to uncover the underlying narratives within the data: identifying high-risk temporal patterns, evaluating how environmental factors compound risk, and mapping spatial clusters of incidents. 
+
+By transitioning from raw data to advanced static and interactive visualizations, this study provides actionable insights into traffic safety, demonstrating a modern, data-driven approach to understanding urban risk factors.
+
+---
+
+# Technical Stack & Ecosystem
+
+To ensure reproducibility, deep statistical rigor, and interactive user experiences, we built our workflow using the **R ecosystem** and the following specialized libraries:
+
+* **`tidyverse` (Core Ecosystem):** Serving as the backbone of our project, it was utilized for efficient data manipulation (`dplyr`, `tidyr`) and for constructing complex, multi-layered static visualizations (`ggplot2`).
+* **`psych` (Statistical Profiling):** Leveraged to generate comprehensive descriptive statistics, allowing us to quickly analyze data distributions, skewness, and initial data health.
+* **`hms` (Temporal Analysis):** Essential for handling specialized time-of-day data, enabling smooth calculations of patterns across peak hours and night shifts.
+* **`viridis` (Perceptual Visualizations):** Used to apply colorblind-friendly, high-contrast, and aesthetically pleasing color scales to our charts, ensuring accessibility and clarity.
+* **`maps` (Spatial Reference):** Provided the foundational geographical boundaries and map data necessary for contextualizing vehicle accident locations.
+* **`leaflet` (Interactive Geospatial Mapping):** Allowed us to build dynamic, interactive web maps directly within the report, enabling users to zoom in on specific accident hot-spots and view metadata tags.
+
+---
+
+# Data Loading & Initial Profiling
+
+In this initial step, we load the required libraries and the dataset, followed by a primary look at the structural and statistical summary of the variables.
+
+```{r}
+#| label: setup-and-load
+#| message: false
+#| warning: false
+
+# Loading the analytic environment
+library(tidyverse)
+library(psych)
+library(hms)
+library(viridis)
+library(maps)
+library(leaflet)
+
+# Importing the dataset
+accidents <- read.csv("data/accidents.csv")
+
+# Reviewing data structure
+glimpse(accidents)
+
+psych::describe(accidents)
+```
+
+
+## Temporal Risk Analysis: Weekdays vs. Weekends
+
+This density analysis examines how the timing and severity of road traffic accidents shift between typical working days and weekends. While weekdays exhibit distinct, sharp spikes corresponding directly to morning and evening commuting rush hours, weekend incidents follow a broader, more distributed curve centered around the afternoon. By overlaying accident severity, this visualization allows us to pinpoint critical operational windows where severe and fatal crashes are disproportionately concentrated throughout the 24-hour cycle.
+
+```{r}
+#| label: temporal-density-plot
+#| warning: false
+#| message: false
+
+accidents %>%
+  mutate(
+    time = as_hms(time),
+    is_weekend = case_when(
+      day_of_week %in% c("Saturday", "Sunday") ~ "Weekend",
+      TRUE ~ "Weekday"
+    ),
+    is_weekend = factor(is_weekend, levels = c("Weekday", "Weekend"))
+  ) %>%
+  filter(!is.na(time), !is.na(severity)) %>%
+  ggplot(aes(x = time, fill = severity, group = severity)) +
+  geom_density(alpha = 0.7) +
+  facet_wrap(~ is_weekend, ncol = 1) +
+  scale_x_time(
+    breaks = hms(hours = seq(0, 24, 4)),
+    labels = scales::label_time("%H:%M")
+  ) +
+  scale_fill_manual(values = c(
+    "Slight" = "#6BAED6",
+    "Serious" = "#FDAE6B",
+    "Fatal" = "#FB6A4A"
+  )) +
+  labs(
+    title = "Number of Accidents Throughout the Day",
+    subtitle = "By day of week and severity level",
+    x = "Time of Day",
+    y = "Density",
+    fill = "Severity"
+  ) +
+  theme_minimal()
+```
+
+## Where do most accidents occur?
+
+The Edinburgh accident map demonstrates a high density of incidents in the central urban areas compared to the outskirts, with the vast majority being of slight severity.
+
+```{r}
+#| warning: false
+#| message: false
+
+accidents %>%
+  filter(!is.na(longitude), !is.na(latitude)) %>%
+  ggplot(aes(x = longitude, y = latitude)) +
+  borders("world", regions = "UK", colour = "gray70", fill = "gray98") +
+  geom_point(aes(colour = severity, size = casualties), alpha = 0.6) +
+  coord_quickmap(xlim = c(-3.35, -3.05), ylim = c(55.85, 56.02)) +
+  scale_colour_viridis_d(option = "viridis") +
+  theme_light() +
+  labs(
+    title = "Map of Edinburgh Accidents",
+    x = "Longitude",
+    y = "Latitude",
+    colour = "Severity",
+    size = "Casualties"
+  )
+
+pal <- colorFactor(
+  palette = c("#FB6A4A", "#FDAE6B", "#6BAED6"),
+  domain = accidents$severity
+)
+
+leaflet(accidents, options = leafletOptions(
+  dragging = FALSE,
+  zoomControl = FALSE,
+  scrollWheelZoom = FALSE,
+  doubleClickZoom = FALSE,
+  touchZoom = FALSE
+)) %>%
+  setView(lng = -3.1883, lat = 55.9533, zoom = 11) %>%
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  addCircleMarkers(
+    lng = ~longitude,
+    lat = ~latitude,
+    radius = ~sqrt(casualties) * 3,
+    color = ~pal(severity),
+    stroke = TRUE,
+    weight = 1,
+    opacity = 0.8,
+    fillOpacity = 0.3,
+    popup = ~paste("Severity:", severity, "<br>Casualties:", casualties)
+  )
+```
+
+To get a clearer view of exactly where these accidents happen in relation to the city's infrastructure, we can project the data onto a detailed street map. The interactive map above uses distinct color coding for severity, and clicking on the markers reveals exact casualty numbers.
+
+## In what weather conditions do more accidents occur?
+
+When breaking down accident severity, a surprising trend emerges: normal weather combined with darkness yields the highest proportion of serious and fatal incidents. While the vast majority of accidents remain slight across all categories, this specific combination shows a distinct increase in dangerous outcomes. Interestingly, extreme weather scenarios actually result in a higher share of minor accidents than normal conditions, possibly suggesting slower driving speeds.
+
+```{r}
+#| warning: false
+#| message: false
+
+accidents %>%
+  mutate(
+    extreme_weather = case_when(
+      weather %in% c(
+        "Raining + no high winds",
+        "Raining + high winds",
+        "Snowing + no high winds",
+        "Snowing + high winds",
+        "Fog or mist"
+      ) ~ "Extreme",
+      weather %in% c("Fine + no high winds", "Fine + high winds") ~ "Normal",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(extreme_weather)) %>%
+  mutate(light_simple = ifelse(
+    light == "Daylight",
+    "Daylight",
+    "Darkness"
+  )) %>%
+  ggplot(aes(x = light_simple, fill = severity)) +
+  geom_bar(position = "fill") +
+  facet_wrap(~ extreme_weather) +
+  labs(
+    title = "Accident Severity by Weather and Lighting Conditions",
+    x = "Lighting conditions",
+    y = "Proportion of accidents",
+    fill = "Severity"
+  ) +
+  scale_fill_manual(values = c(
+    "Slight" = "#6BAED6",
+    "Serious" = "#FDAE6B",
+    "Fatal" = "#FB6A4A"
+  )) +
+  coord_flip() +
+  theme_minimal()
+```
+
+## Do speed limits affect number of accidents in urban vs rural areas?
+
+In urban areas, nearly everything is clustered at the bottom of the scale. Most accidents, whether slight or fatal, happen on 20-30 mph roads. This makes sense given the lower speed limits and higher traffic density in cities.
+
+The data spreads out much more in rural areas, with a concentration of serious and slight accidents happening at 60-70 mph. Interestingly, the rural fatal category is empty in this dataset, but the serious accidents show a significant bulge at those higher speeds.
+
+Essentially, while urban accidents are frequent at low speeds, the rural data illustrates that higher speed limits are where the more serious trouble happens.
+
+```{r}
+#| warning: false
+#| message: false
+
+accidents %>%
+  mutate(
+    area = case_when(
+      urban_rural == 1 ~ "Urban",
+      urban_rural == 2 ~ "Rural",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(area)) %>%
+  ggplot(aes(x = severity, y = speed_limit, fill = severity)) +
+  geom_violin(trim = FALSE, alpha = 0.7) +
+  facet_wrap(~ area) +
+  labs(
+    title = "Distribution of Speed Limits by Accident Severity and Area",
+    x = "Severity",
+    y = "Speed Limit",
+    fill = "Severity"
+  ) +
+  scale_fill_manual(values = c(
+    "Slight" = "#6BAED6",
+    "Serious" = "#FDAE6B",
+    "Fatal" = "#FB6A4A"
+  )) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "none"
+  )
+```
+
+## Do police presence at accident scenes depend on accident severity?
+
+Police respond to the vast majority of accidents, no matter the severity. While their presence is mandatory for fatal crashes, they still arrive on scene roughly 75% of the time for minor ones.
+
+```{r}
+
+ggplot(accidents, aes(x = severity, fill = police)) +
+  geom_bar(position = "fill") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Probability of Police Attendance by Accident Severity",
+    x = "Severity",
+    y = "Percentage of Incidents",
+    fill = "Police Attended?"
+  ) +
+  scale_fill_manual(values = c(
+    "No" = "#6BAED6",
+    "No + accident self reported" = "#FDAE6B",
+    "Yes" = "#FB6A4A"
+  )) +
+  theme_minimal()
+```

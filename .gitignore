@@ -1,0 +1,21 @@
+# R workspace files
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+
+# Quarto output and caches
+_cache/
+_freeze/
+*_files/
+.quarto/
+
+# R package environments and dependency caches
+renv/library/
+renv/python/
+renv/staging/
+
+# Generic editor and OS clutter
+.DS_Store
+Thumbs.db
+*.log
