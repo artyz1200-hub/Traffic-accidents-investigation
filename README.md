@@ -88,7 +88,7 @@ To run the analysis locally, ensure you have the following libraries installed i
 
 
 
-### 🚀 How to Run the Project (Two Methods)
+### 🚀 How to Run the Project (Two different methods)
 
 Before starting, ensure that the dataset is placed exactly at `data/accidents.csv`.
 
