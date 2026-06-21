@@ -87,22 +87,58 @@ To run the analysis locally, ensure you have the following libraries installed i
 
 ### Setup and Render
 
-1. Clone the repository and install the dependencies inside your R console:
-```r
-   install.packages(c("tidyverse", "psych", "hms", "viridis", "maps", "leaflet", "scales"))
+Для проектов на R стандартных файлов вроде `requirements.txt` (как в Python) обычно не делают, но в индустрии принято создавать файл **`DESCRIPTION`** или использовать встроенный менеджер пакетов `renv`.
+
+Так как у вас в `.gitignore` уже прописаны папки `renv/`, идеальным и самым профессиональным решением будет создать файл **`dependencies.R`** или **`DESCRIPTION`**. Давайте сделаем простой файл **`requirements.R`**, который содержит список всех библиотек, чтобы его можно было запустить одной командой.
+
+Ниже представлен переработанный блок для вашего `README.md` с файлом требований и двумя подробными вариантами запуска (для **VS Code** и для **RStudio**).
+
+### Замените концовку вашего `README.md` на этот текст:
+
+```markdown
+---
+
+
+### 🚀 How to Run the Project (Two Methods)
+
+Before starting, ensure that the dataset is placed exactly at `data/accidents.csv`.
+
+#### Option A: Running via VS Code (Terminal-Based Workflow)
+
+1. Open the project folder in **VS Code**.
+2. Open your terminal (`Ctrl + ~` or `Cmd + ~`) and ensure you are in the project root directory.
+3. Run the requirements script to automatically install all dependencies:
+
+```bash
+   Rscript requirements.R
 
 ```
 
-2. Verify that the dataset file is placed exactly at `data/accidents.csv`.
-3. Render the interactive Quarto HTML report via your terminal:
+4. **To Render the Final Document:** Generate the self-contained interactive HTML file using the Quarto CLI:
 
 ```bash
    quarto render index.qmd
 
 ```
 
-4. If you prefer an active development server, initiate the live preview:
+5. **To Develop and Preview:** If you want an active development server that updates live as you edit code, run:
 
 ```bash
    quarto preview index.qmd --no-browser
+
 ```
+
+#### Option B: Running via RStudio (GUI-Based Workflow)
+
+1. Launch **RStudio** and open your project directory (or double-click the `.Rproj` file if available).
+2. Open the R Console pane and run the automated installation script:
+
+```r
+   source("requirements.R")
+
+```
+
+3. In the file explorer inside RStudio, click on **`index.qmd`** to open it in the editor pane.
+4. **To Render the Final Document:** Look at the top toolbar of the text editor and click the **🖨️ Render** button (or use the shortcut `Ctrl + Shift + K` / `Cmd + Shift + K`). RStudio will compile the file and automatically pop up a window displaying your interactive HTML report.
+5. **To View Interactive Elements:** Make sure to select "View in Browser" if the Leaflet maps require a full window to scale properly.
+
