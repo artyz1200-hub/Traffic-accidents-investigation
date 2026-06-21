@@ -85,18 +85,7 @@ To run the analysis locally, ensure you have the following libraries installed i
 * `viridis` (Accessible color scales)
 * `maps` & `leaflet` (Geospatial mapping)
 
-### Setup and Render
 
-Для проектов на R стандартных файлов вроде `requirements.txt` (как в Python) обычно не делают, но в индустрии принято создавать файл **`DESCRIPTION`** или использовать встроенный менеджер пакетов `renv`.
-
-Так как у вас в `.gitignore` уже прописаны папки `renv/`, идеальным и самым профессиональным решением будет создать файл **`dependencies.R`** или **`DESCRIPTION`**. Давайте сделаем простой файл **`requirements.R`**, который содержит список всех библиотек, чтобы его можно было запустить одной командой.
-
-Ниже представлен переработанный блок для вашего `README.md` с файлом требований и двумя подробными вариантами запуска (для **VS Code** и для **RStudio**).
-
-### Замените концовку вашего `README.md` на этот текст:
-
-```markdown
----
 
 
 ### 🚀 How to Run the Project (Two Methods)
