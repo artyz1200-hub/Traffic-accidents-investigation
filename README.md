@@ -12,11 +12,7 @@
 </p>
 
 
----
 
-A comprehensive, data-driven exploratory data analysis (EDA) of road traffic incidents, focused on uncovering spatial-temporal accident hotspots, assessing environmental risk factors, and analyzing emergency response patterns.
-
----
 
 ## 📌 Project Overview
 
@@ -27,7 +23,17 @@ Using a rich dataset containing 31 variables and detailed accident records, we c
 Rather than simply reporting accident counts, our objective is to generate actionable insights into how road infrastructure, speed limits, weather conditions, and lighting environments interact to shape accident risk. The entire analysis and final report are presented as a fully reproducible, self-contained Quarto document, ensuring transparency and ease of replication.
 
 
----
+
+
+## 👥 Team & Contributors
+
+
+
+* **Artur Zavistovskii** — [GitHub Profile](https://github.com/artyz1200-hub)
+* **Bhuvanesh Dinesh Wadhwani** — [GitHub Profile](https://github.com/BhuvaneshWadhwani)
+* **Anastasiia Khitrova** — [GitHub Profile](https://github.com/hitrova27-svg)
+
+
 
 ## 📊 Visual Insights & Analytics
 
@@ -68,17 +74,6 @@ Evaluating environmental variables reveals that lighting conditions amplify cras
 * **Speed vs. Severity:** Urban accidents dominate low-speed zones due to sheer traffic volume and complex intersections, but rural accidents at 60–70 mph demonstrate exponentially higher rates of serious and fatal outcomes.
 * **Integrated Emergency Workflows:** High police attendance metrics across all severities indicate a robust, deeply integrated emergency response infrastructure already in place.
 
----
-
-## 👥 Team & Contributors
-
-
-
-* **Artur Zavistovskii** — [GitHub Profile](https://github.com/artyz1200-hub)
-* **Bhuvanesh Dinesh Wadhwani** — [GitHub Profile](https://github.com/BhuvaneshWadhwani)
-* **Anastasiia Khitrova** — [GitHub Profile](https://github.com/hitrova27-svg)
-
----
 
 ## 🛠️ Installation & Reproduction
 
