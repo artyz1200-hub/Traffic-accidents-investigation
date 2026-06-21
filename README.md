@@ -1,75 +1,99 @@
-# Investigating Road Traffic Accidents
 
-A polished exploratory data analysis of road traffic accidents in Edinburgh, focused on uncovering where collisions happen, when risk increases, and how severity changes across weather, lighting, speed, and response conditions.
+# Investigating Road Traffic Accidents in Edinburgh
 
-## Project Overview
+A comprehensive, data-driven exploratory data analysis (EDA) of road traffic incidents, focused on uncovering spatial-temporal accident hotspots, assessing environmental risk factors, and analyzing emergency response patterns.
 
-This project investigates a real accident dataset from Edinburgh to answer a simple but important question: what patterns can help explain road traffic risk in the city? The analysis uses `accidents.csv`, which contains 768 accident records and 31 variables covering location, severity, weather, lighting, road type, speed limits, urban or rural context, and police attendance.
+---
 
-The work combines data cleaning, summary statistics, geographic exploration, and visual storytelling to highlight how environment and infrastructure affect accident outcomes. The final report is designed as a Quarto document so it can be rendered cleanly for sharing, portfolio review, or presentation.
+## 📌 Project Overview
 
-![Traffic Analysis Plot](screenshots/time_of_day_density.png)
+This project investigates an authentic road accident dataset from Edinburgh to uncover critical patterns that explain traffic risk and crash severity across the urban landscape. 
 
-Place this screenshot immediately after the introduction if you want to show the time-of-day severity distribution as a strong first visual.
+Utilizing a comprehensive database containing detailed incident records and 31 variables, our team performed an end-to-end analytical workflow combining data cleansing, rigorous statistical profiling, and advanced spatial-temporal visual storytelling. 
 
-## Key Insights & Conclusions
+The primary goal of this study is to move beyond raw statistics to extract actionable insights on how infrastructure design, speed limits, atmospheric conditions, and lighting interact to compound road risk. The final report is compiled as a fully reproducible, self-contained Quarto document.
 
-- Most accidents in the dataset are slight, but the risk profile changes sharply when darkness is involved, especially under normal weather conditions.
-- Urban accident activity is concentrated around low speed limits, particularly 20-30 mph roads, which aligns with dense traffic and frequent conflict points.
-- Rural accidents are spread across higher speed limits, and serious incidents become more prominent at 60-70 mph.
-- The Edinburgh map shows a clear urban clustering of incidents rather than a random citywide spread, which supports a targeted prevention strategy.
-- Police attendance is high across all severities, showing that emergency response is already deeply integrated into most incidents.
-- Weather alone is not the whole story; lighting conditions appear to amplify severity more strongly than rain or fog on their own.
+---
 
-![Edinburgh Accident Map](screenshots/edinburgh_accident_map.png)
+## 📊 Visual Insights & Analytics
 
-Use this right after the location insight to make the spatial pattern visually obvious.
+### 1. Temporal Risk Analysis: Weekdays vs. Weekends
+The timing and severity of traffic incidents shift drastically throughout the 24-hour cycle. Weekday incidents show sharp, pronounced spikes aligning with morning and evening commuting rush hours, whereas weekend crashes follow a broader distribution centered around the afternoon.
 
-![Weather and Lighting Severity](screenshots/weather_lighting_severity.png)
+<img src="vizual_/Number_of_Accidents.png" alt="Temporal Distribution of Accidents" width="85%"/>
 
-This works best beside the weather insight, because it visually supports the point that darkness increases the share of serious outcomes.
+### 2. Spatial Mapping & Hotspot Detection
+Geospatial analysis confirms significant urban clustering rather than a random citywide spread. Lower-severity incidents dominate the dense central grid, while higher-casualty crashes are scattered along arterial routes.
 
-![Speed Limits by Area](screenshots/speed_limits_by_area.png)
+<img src="vizual_/Map_of_Edinburgh_Accidents.png" alt="Static Map of Edinburgh Accidents" width="85%"/>
 
-Insert this after the urban vs rural insight so the reader sees the contrast in speed distribution immediately.
+### 3. Interactive Geospatial Dashboard
+An interactive map component allows stakeholder deep-dives into localized accident zones, where marker radius corresponds dynamically to casualty counts and colors represent specific crash severities.
 
-![Police Attendance by Severity](screenshots/police_attendance.png)
+<img src="vizual_/LEAFLET.png" alt="Interactive Leaflet Map" width="85%"/>
 
-Place this at the end of the insights section as a clean conclusion visual showing response patterns across severity levels.
+### 4. Structural Distribution of Speed Limits
+Analysis of infrastructure parameters highlights that the vast majority of urban incidents are heavily concentrated on low-speed roads (20–30 mph) due to frequent conflict points and pedestrian density.
 
-## Team & Contributors
+<img src="vizual_/Distribution_of_Speed_Limits.png" alt="Distribution of Speed Limits" width="85%"/>
 
-- [Artur Zavistovskii](https://github.com/artyz1200-hub)
-- [Bhuvanesh Dinesh Wadhwani](https://github.com/BhuvaneshWadhwani)
-- [Anastasiia Khitrova](https://github.com/hitrova27-svg)
+### 5. Accident Severity & Emergency Response Profiles
+Evaluating environmental variables reveals that lighting conditions amplify crash severity more strongly than adverse weather like rain or fog alone. Concurrently, operational data shows a highly integrated emergency workflow, with police attendance remaining consistently high across all severity levels.
 
-## How to Run
+<p>
+  <img src="vizual_/Sevirity.png" alt="Accident Severity Factors" width="45%" style="display: inline-block; margin-right: 2%;"/>
+  <img src="vizual_/Probability_of_Police_Attendance.png" alt="Police Attendance Probability" width="45%" style="display: inline-block;"/>
+</p>
 
-### Required R libraries
+---
 
-- `tidyverse`
-- `psych`
-- `hms`
-- `viridis`
-- `maps`
-- `leaflet`
-- `scales`
+## 💡 Key Insights & Conclusions
 
-### Setup and render
+* **Temporal Commuter Risks:** Weekday traffic risk peaks heavily during specific rush-hour windows, demanding targeted law enforcement and traffic management during commuting hours.
+* **Lighting as a Risk Multiplier:** Adverse weather conditions are hazardous, but poor or absent street lighting acts as a much stronger catalyst for increasing crash severity.
+* **Speed vs. Severity:** Urban accidents dominate low-speed zones due to sheer traffic volume and complex intersections, but rural accidents at 60–70 mph demonstrate exponentially higher rates of serious and fatal outcomes.
+* **Integrated Emergency Workflows:** High police attendance metrics across all severities indicate a robust, deeply integrated emergency response infrastructure already in place.
 
-1. Install the required packages:
+---
 
+## 👥 Team & Contributors
+
+We are a collaborative team of data enthusiasts focused on delivering impactful data stories:
+
+* **Artur Zavistovskii** — [GitHub Profile](https://github.com/artyz1200-hub)
+* **Bhuvanesh Dinesh Wadhwani** — [GitHub Profile](https://github.com/BhuvaneshWadhwani)
+* **Anastasiia Khitrova** — [GitHub Profile](https://github.com/hitrova27-svg)
+
+---
+
+## 🛠️ Installation & Reproduction
+
+### Required R Packages
+To run the analysis locally, ensure you have the following libraries installed in your R environment:
+* `tidyverse` (Data manipulation & static plotting)
+* `psych` (Statistical profiling)
+* `hms` & `scales` (Temporal scaling)
+* `viridis` (Accessible color scales)
+* `maps` & `leaflet` (Geospatial mapping)
+
+### Setup and Render
+
+1. Clone the repository and install the dependencies inside your R console:
 ```r
-install.packages(c("tidyverse", "psych", "hms", "viridis", "maps", "leaflet", "scales"))
+   install.packages(c("tidyverse", "psych", "hms", "viridis", "maps", "leaflet", "scales"))
+
 ```
 
-2. Make sure the dataset is available at `data/accidents.csv`.
-3. Render the Quarto report:
+2. Verify that the dataset file is placed exactly at `data/accidents.csv`.
+3. Render the interactive Quarto HTML report via your terminal:
 
 ```bash
-quarto render index.qmd
+   quarto render index.qmd
+
 ```
 
-4. Open the generated HTML output in your browser or Quarto preview.
+4. If you prefer an active development server, initiate the live preview:
 
-If you prefer working from RStudio, open `index.qmd` and click Render. The report should knit cleanly as long as the package dependencies are installed and the CSV path matches the repository structure.
+```bash
+   quarto preview index.qmd --no-browser
+```
