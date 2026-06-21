@@ -1,6 +1,19 @@
 
 # Investigating Road Traffic Accidents in Edinburgh
 
+<p align="center">
+  <a href="https://artyz1200-hub.github.io/Traffic-accidents-investigation/">
+    <img src="https://img.shields.io/badge/📊%20View%20Interactive%20Report-Click%20Here-blue?style=for-the-badge&logo=quarto&logoColor=white" alt="View Interactive Report" size="large"/>
+  </a>
+</p>
+
+<p align="center">
+  <strong>Click the badge above to view the full interactive report with dynamic Leaflet maps, advanced profiling, and responsive charts directly in your browser!</strong>
+</p>
+
+
+---
+
 A comprehensive, data-driven exploratory data analysis (EDA) of road traffic incidents, focused on uncovering spatial-temporal accident hotspots, assessing environmental risk factors, and analyzing emergency response patterns.
 
 ---
