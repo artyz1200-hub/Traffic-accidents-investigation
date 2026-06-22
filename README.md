@@ -29,7 +29,7 @@ Rather than simply reporting accident counts, our objective is to generate actio
 
 
 
-* **Artur Zavistovskii** — [GitHub Profile](https://github.com/artyz1200-hub)
+* **Artur Zavistovskyi** — [GitHub Profile](https://github.com/artyz1200-hub)
 * **Bhuvanesh Dinesh Wadhwani** — [GitHub Profile](https://github.com/BhuvaneshWadhwani)
 * **Anastasiia Khitrova** — [GitHub Profile](https://github.com/hitrova27-svg)
 
